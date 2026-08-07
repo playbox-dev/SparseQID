@@ -1,0 +1,29 @@
+SparseQID
+
+Source code
+
+SparseQID source code is licensed under the Apache License 2.0 in LICENSE.
+It contains source adapted from these two Apache-2.0 projects:
+
+NVIDIA TAO Sparse4D
+Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+https://github.com/NVIDIA/tao_pytorch_backend
+
+MOTIP -- Multiple Object Tracking as ID Prediction
+Copyright (c) Ruopeng Gao. All Rights Reserved.
+https://github.com/MCG-NJU/MOTIP
+
+The original copyright and SPDX notices are retained in directly adapted
+files. The upstream names identify the source projects and do not imply
+endorsement.
+
+NGC Sparse4D model artifacts
+
+Licensed by NVIDIA Corporation under the NVIDIA Open Model License
+
+The SparseQID checkpoints are Derivative Models based on NVIDIA's NGC
+Sparse4D ResNet-101 model, trainable_v2.2. The pinned NGC configuration and
+anchor priors under src/sparseqid/configs/sparse4d_rn101_v2.2 are also NVIDIA
+model artifacts. Their use and redistribution are governed by
+licenses/NVIDIA-OPEN-MODEL-LICENSE.md. The Apache License 2.0 covering source
+code does not replace or supersede those model terms.

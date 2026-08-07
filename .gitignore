@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.eval-venv/
+dist/
+build/
+/data/
+
+# Model and experiment artifacts are published separately.
+*.pth
+*.pt
+*.ckpt
+outputs/
+wandb/

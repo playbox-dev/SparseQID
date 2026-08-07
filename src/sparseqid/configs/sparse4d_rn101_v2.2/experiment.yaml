@@ -1,0 +1,179 @@
+model:
+  type: sparse4d
+  embed_dims: 256
+  backbone:
+    type: resnet_101
+  neck:
+    type: FPN
+    num_outs: 4
+    start_level: 0
+    out_channels: 256
+    in_channels:
+    - 256
+    - 512
+    - 1024
+    - 2048
+    add_extra_convs: on_output
+    relu_before_extra_convs: true
+  head:
+    type: sparse4d
+    score_threshold: 0.05
+    cls_threshold_to_reg: 0.05
+    decouple_attn: true
+    return_feature: true
+    num_decoder: 6
+    num_single_frame_decoder: 1
+    operation_order:
+    - deformable
+    - ffn
+    - norm
+    - refine
+    - temp_gnn
+    - gnn
+    - norm
+    - deformable
+    - ffn
+    - norm
+    - refine
+    - temp_gnn
+    - gnn
+    - norm
+    - deformable
+    - ffn
+    - norm
+    - refine
+    - temp_gnn
+    - gnn
+    - norm
+    - deformable
+    - ffn
+    - norm
+    - refine
+    - temp_gnn
+    - gnn
+    - norm
+    - deformable
+    - ffn
+    - norm
+    - refine
+    - temp_gnn
+    - gnn
+    - norm
+    - deformable
+    - ffn
+    - norm
+    - refine
+    instance_bank:
+      num_anchor: 900
+      anchor: /path/to/_ov_kmeans900_v2.2_r101.npy
+      num_temp_instances: 600
+      confidence_decay: 0.8
+      feat_grad: false
+      default_time_interval: 0.033333
+      embed_dims: ${model.embed_dims}
+    anchor_encoder:
+      type: SparseBox3DEncoder
+      vel_dims: 3
+      embed_dims:
+      - 128
+      - 32
+      - 32
+      - 64
+      mode: cat
+      output_fc: false
+      in_loops: 1
+      out_loops: 4
+      pos_embed_only: false
+    matching:
+      cls_weight: 2.0
+      box_weight: 0.25
+      reg_weights:
+      - 2.0
+      - 2.0
+      - 2.0
+      - 0.5
+      - 0.5
+      - 0.5
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+    deformable_model:
+      embed_dims: ${model.embed_dims}
+      num_groups: 8
+      num_levels: 4
+      attn_drop: 0.15
+      use_camera_embed: true
+      residual_mode: cat
+      num_cams: 6
+      max_num_cams: 20
+      proj_drop: 0.0
+      kps_generator:
+        embed_dims: ${model.embed_dims}
+        num_learnable_pts: 6
+        fix_scale:
+        - - 0
+          - 0
+          - 0
+        - - 0.45
+          - 0
+          - 0
+        - - -0.45
+          - 0
+          - 0
+        - - 0
+          - 0.45
+          - 0
+        - - 0
+          - -0.45
+          - 0
+        - - 0
+          - 0
+          - 0.45
+        - - 0
+          - 0
+          - -0.45
+    refine_layer:
+      type: SparseBox3DRefinementModule
+      embed_dims: ${model.embed_dims}
+      refine_yaw: true
+      with_quality_estimation: true
+    graph_model:
+      type: MultiheadAttention
+      embed_dims: ${model.head.temp_graph_model.embed_dims}
+      num_heads: ${model.head.temp_graph_model.num_heads}
+      batch_first: true
+      dropout: ${model.head.temp_graph_model.dropout}
+    temp_graph_model:
+      type: MultiheadAttention
+      embed_dims: 512
+      num_heads: 8
+      batch_first: true
+      dropout: 0.1
+    norm_layer:
+      type: LN
+      normalized_shape: ${model.embed_dims}
+    ffn:
+      type: AsymmetricFFN
+      in_channels: 512
+      pre_norm:
+        type: LN
+        normalized_shape: 256
+      embed_dims: 256
+      feedforward_channels: 1024
+      num_fcs: 2
+      ffn_drop: 0.1
+      act_cfg:
+        type: ReLU
+        inplace: true
+
+dataset:
+  classes:
+  - person
+  - gr1_t2
+  - agility_digit
+  - nova_carter
+  - transporter
+  - forklift
+  - pallet_truck
