@@ -3,14 +3,16 @@
 The dataset's ``calibration.json`` provides, per camera sensor:
   - ``intrinsicMatrix``  : 3x3 K
   - ``extrinsicMatrix``  : 3x4 world->camera [R|t]
-  - ``cameraMatrix``     : 3x4 full world->image projection P  (== K @ [R|t], but we
-                           use it directly per the verified data contract)
+  - ``cameraMatrix``     : 3x4 full world->image projection P (nominally K @ [R|t])
   - ``homography``       : 3x3 ground-plane homography
   - ``attributes``       : fps, direction3d, frameWidth, frameHeight
 
-Verified projection convention (sticky-note rule #1):
+Verified projection convention:
     uvw = P @ [x, y, z, 1]^T ;  (u, v) = uvw[:2] / uvw[2] ;  w = uvw[2] > 0  (in front)
-Do NOT recompose P from K @ [R|t]; use ``cameraMatrix`` directly.
+
+We recompose ``P = K @ [R|t]`` rather than using the stored ``cameraMatrix``, because
+many 2026 cameras ship a ``cameraMatrix`` whose homogeneous w is negative for in-view
+points and so fails the w > 0 test. See :func:`load_calibration` for the details.
 """
 
 from __future__ import annotations

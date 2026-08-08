@@ -2,7 +2,7 @@
 
 The submission's ``class_id`` column MUST use ``CLASS_ID_TO_NAME`` below. This is the
 **official 2026** map, verified against the dataset's ``all_txt_gt.txt`` (per-class
-instance counts matched 1:1). ``tests/test_classid_map.py`` pins it.
+instance counts matched 1:1). ``tests/test_detector_integration.py`` pins it.
 
 Difference from the 2025 harness (do not regress): 2026 id ``6`` is **PalletTruck**
 (2025 used ``Crate``), and 2025's static ids ``7-10`` (Basket/KLTBin/Cone/Rack) do not
