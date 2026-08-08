@@ -22,10 +22,12 @@ def test_training_defaults_are_the_submitted_frozen_recipe() -> None:
     assert args.gradient_clip == 1.0
 
 
-def test_unified_cli_lists_the_three_public_commands(capsys) -> None:
+def test_unified_cli_lists_the_public_commands(capsys) -> None:
     cli_main([])
     help_text = capsys.readouterr().out
-    assert all(command in help_text for command in ("extract", "train", "infer"))
+    assert all(
+        command in help_text for command in ("extract", "train", "infer", "visualize")
+    )
     assert "evaluate" not in help_text
 
 

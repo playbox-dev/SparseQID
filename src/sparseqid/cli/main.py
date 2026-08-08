@@ -13,6 +13,7 @@ COMMANDS = {
     "extract": "build the JPEG frame cache",
     "train": "train the identity model",
     "infer": "run tracking inference",
+    "visualize": "render tracked boxes as MP4 clips",
 }
 
 
