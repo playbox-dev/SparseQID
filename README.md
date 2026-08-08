@@ -47,13 +47,6 @@ uvx --from huggingface-hub hf download playbox-dev/SparseQID \
 Each checkpoint contains the backbone, neck, detector head, trajectory memory,
 identity decoder, and position encoder needed for inference.
 
-## Credits
-
-SparseQID includes code adapted from
-[NVIDIA TAO Sparse4D](https://github.com/NVIDIA/tao_pytorch_backend) and
-[MOTIP](https://github.com/MCG-NJU/MOTIP). Original copyright headers are
-retained in adapted files.
-
 ## Evaluation
 
 SparseQID does not redistribute or wrap an evaluator. NVIDIA’s current
@@ -76,5 +69,10 @@ Please also cite the MOTIP and outside-in Sparse4D papers when using their
 corresponding components.
 
 ## License
+
+SparseQID includes code adapted from
+[NVIDIA TAO Sparse4D](https://github.com/NVIDIA/tao_pytorch_backend) and
+[MOTIP](https://github.com/MCG-NJU/MOTIP). Original copyright headers are
+retained in adapted files.
 
 See [LICENSE](LICENSE) and [NOTICE](NOTICE).
