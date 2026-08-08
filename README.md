@@ -29,8 +29,15 @@ sqid train       train the identity model with a frozen recurrent detector
 sqid infer       run detector, identity assignment, and submission writing
 ```
 
-See [docs/REPRODUCE.md](docs/REPRODUCE.md) for the complete data preparation,
-training, inference, and submission workflow.
+- [docs/REPRODUCE.md](docs/REPRODUCE.md) — dataset download, expected directory
+  layout, frame caches, training, inference, and evaluation, end to end.
+- [docs/CLI.md](docs/CLI.md) — every option of the three subcommands, with
+  defaults.
+
+The data comes from NVIDIA's
+[PhysicalAI-SmartSpaces](https://huggingface.co/datasets/nvidia/PhysicalAI-SmartSpaces)
+dataset (subsets `MTMC_Tracking_2026` and `MTMC_Tracking_2025`); it is public
+and needs no Hugging Face login.
 
 ## Checkpoints
 
