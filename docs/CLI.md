@@ -7,6 +7,7 @@
 sqid extract     build the JPEG frame cache from the dataset videos
 sqid train       train the identity model on a frozen recurrent detector
 sqid infer       run detector + identity assignment and write a submission
+sqid visualize   render a predictions file as MP4 clips
 ```
 
 Paths default to the environment variables described in
@@ -128,3 +129,34 @@ all `ngc-*` checkpoints use `combined`; the `tok-appearance` checkpoint needs
 
 To disable a geometric constraint for the ablation, pass a very large value
 (for example `--spatial-gate 1e9`); the gate is always active with its default.
+
+## `sqid visualize`
+
+Renders a predictions file written by `sqid infer` as MP4 clips. It reads the
+JPEG frame cache and `calibration.json` — no checkpoint, no GPU, and no ground
+truth. [QUICKSTART.md](QUICKSTART.md) walks through it end to end.
+
+| Option | Default | Meaning |
+|---|---|---|
+| `--preds` | *required* | 11-column predictions file. Any file in that format works, so ground truth converted to it renders the same way. |
+| `--scene` | *required* | Scene name, used to locate calibration, cached frames, and to name the output clips. |
+| `--split` | `val` | Split directory. |
+| `--data-root` | `$AICITY26_DATA`, else `data/MTMC_Tracking_2026` | Dataset root; only `calibration.json` is read. |
+| `--cache-root` | `$AICITY26_CACHE`, else `data/aicity2026_frames_540` | JPEG cache built by `sqid extract`. |
+| `--out` | `outputs/viz` | Output directory. |
+| `--frames` | `0:900` | Source frame range `START:END` or `START:END:STEP`; `END` is exclusive. Only frames present in the cache are rendered. |
+| `--cameras` | first camera of the scene | Camera ids to render. One MP4 per camera. |
+| `--view` | `both` | `camera` for projected overlays, `bev` for the top-down panel, `both` for each. |
+| `--color-by` | `id` | `id` gives every track its own stable colour, so an identity switch appears as a colour change. `class` colours by object class instead. |
+| `--fps` | real-time | Output frame rate. The default divides 30 by the cache stride, so an `--every 3` cache plays back at 10 fps rather than triple speed. |
+| `--bev-size` | `900` | Longest side of the bird's-eye image, in pixels. |
+
+Outputs are `<scene>_<camera>.mp4` per requested camera and `<scene>_bev.mp4`
+for the top-down view.
+
+Boxes whose corners all fall behind a camera, or entirely outside its frame,
+are skipped for that view; the per-camera line printed on completion reports how
+many were actually drawn. Because the cache holds resized frames, the projection
+is scaled to the cached image size — so the clips match whatever `--scale` the
+cache was built with.
+

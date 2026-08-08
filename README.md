@@ -21,17 +21,20 @@ uv sync --dev
 uv run pytest
 ```
 
-The package exposes one command with three subcommands:
+The package exposes one command with four subcommands:
 
 ```text
 sqid extract     build the JPEG frame cache
 sqid train       train the identity model with a frozen recurrent detector
 sqid infer       run detector, identity assignment, and submission writing
+sqid visualize   render tracked boxes as MP4 clips
 ```
 
+- [docs/QUICKSTART.md](docs/QUICKSTART.md) — nothing to a tracking video on one
+  validation scene, in six commands.
 - [docs/REPRODUCE.md](docs/REPRODUCE.md) — dataset download, expected directory
   layout, frame caches, training, inference, and evaluation, end to end.
-- [docs/CLI.md](docs/CLI.md) — every option of the three subcommands, with
+- [docs/CLI.md](docs/CLI.md) — every option of the four subcommands, with
   defaults.
 
 The data comes from NVIDIA's

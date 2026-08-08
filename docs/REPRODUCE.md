@@ -3,8 +3,9 @@
 Run all commands from the repository root. Full training used eight A100 GPUs;
 full-scene inference requires one CUDA-capable GPU.
 
-This page is the end-to-end workflow. [CLI.md](CLI.md) documents every option
-of `sqid extract`, `sqid train`, and `sqid infer` with its default.
+This page is the end-to-end workflow. [QUICKSTART.md](QUICKSTART.md) is the
+short path to a rendered video on one scene, and [CLI.md](CLI.md) documents
+every subcommand option with its default.
 
 ## 1. Install
 
